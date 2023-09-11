@@ -7,4 +7,5 @@ I was really bored and made this just run the script (make sure you have the imp
 ## Todo list
 - [x] Working as of 9/9/23
 - [x] Bulk video downloading from a list in txt file
+- [ ] Scrape search terms and pages for videos
 - [ ] 10 stars
