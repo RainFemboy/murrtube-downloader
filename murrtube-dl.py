@@ -4,13 +4,12 @@ from bs4 import BeautifulSoup
 import subprocess
 import random
 import string
+import threading
 
-# Function to generate a random filename
 def generate_random_filename():
     random_chars = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(12))
     return f"video_{random_chars}.mp4"
 
-# Function to download a video from a URL
 def download_video(url):
     response = requests.get(url)
 
@@ -38,23 +37,36 @@ def download_video(url):
     else:
         print(f"Failed to fetch '{url}'. Status code: {response.status_code}")
 
-# Ask the user for the URL or path to a text file
+def bulk_download_video(video_urls, num_threads):
+    threads = []
+    for i in range(num_threads):
+        start = i * len(video_urls) // num_threads
+        end = (i + 1) * len(video_urls) // num_threads
+        thread = threading.Thread(target=download_video_list, args=(video_urls[start:end],))
+        threads.append(thread)
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
+
+def download_video_list(urls):
+    for url in urls:
+        download_video(url)
+
 print("Script by @RainFemboy on github, repo is 'RainFemboy/murrtube-downloader' let me know if there are any issues.")
 input_type = input("Enter '1' for a single video URL or '2' for a text file with multiple URLs: ")
 
 if input_type == '1':
-    # Single video download
     url = input("Enter the URL of the video (ex. https://murrtube.net/v/Example): ")
     download_video(url)
 elif input_type == '2':
-    # Bulk download from a text file
     file_path = input("Enter the path to the text file containing video URLs (ex. bulk.txt): ")
 
     try:
         with open(file_path, 'r') as file:
             video_urls = file.read().splitlines()
-            for url in video_urls:
-                download_video(url)
+            num_threads = int(input("Enter the number of concurrent downloads: "))
+            bulk_download_video(video_urls, num_threads)
     except FileNotFoundError:
         print(f"The file '{file_path}' was not found.")
     except Exception as e:
