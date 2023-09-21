@@ -9,6 +9,6 @@ I was really bored and made this just run the script (make sure you have the imp
 - [x] Bulk video downloading from a list in txt file
 - [x] Scrape search terms and pages for videos
 - [x] Account video downloader
-- [ ] Download multiple videos at a time
+- [x] Download multiple videos at a time
 - [ ] Download videos as video title
 - [ ] 10 stars
