@@ -8,4 +8,6 @@ I was really bored and made this just run the script (make sure you have the imp
 - [x] Working as of 9/9/23
 - [x] Bulk video downloading from a list in txt file
 - [ ] Scrape search terms and pages for videos
+- [ ] Tag downloader
+- [ ] Account video downloader
 - [ ] 10 stars
