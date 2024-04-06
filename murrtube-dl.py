@@ -26,6 +26,7 @@ def download_video(url):
                 "ffmpeg",
                 "-i", video_url,
                 "-c", "copy",
+                "-bsf:a", "aac_adtstoasc", # convert MPEG ADTS
                 output_filename
             ]
 
